@@ -19,14 +19,14 @@ namespace WhatLevelAmI
             // this is some code created by Copilot
 
                 // Create a FilteredElementCollector to collect all elements in the document
-                FilteredElementCollector collector = new FilteredElementCollector(doc);
+               // FilteredElementCollector collector = new FilteredElementCollector(doc);
 
                 // Filter elements that have the shared parameter "MyLevel"
-                var elementsWithMyLevel = collector
-                    .WherePasses(new ElementParameterFilter(new SharedParameterElementFilter("MyLevel")))
-                    .ToList();
+                //var elementsWithMyLevel = collector
+                //    .WherePasses(new ElementParameterFilter(new SharedParameterElementFilter("MyLevel")))
+                //    .ToList();
 
-            public static List<Element> GetElementsInCategoryWithParameter( Document doc, BuiltInCategory category, string parameterName ) { return new FilteredElementCollector( doc ).OfCategory( category ).WhereElementIsNotElementType().Where( e => e.LookupParameter( parameterName ) != null ).ToList(); }
+            //public static List<Element> GetElementsInCategoryWithParameter( Document doc, BuiltInCategory category, string parameterName ) { return new FilteredElementCollector( doc ).OfCategory( category ).WhereElementIsNotElementType().Where( e => e.LookupParameter( parameterName ) != null ).ToList(); }
 
 
         List<Element> myList = new FilteredElementCollector( doc )
@@ -35,7 +35,7 @@ namespace WhatLevelAmI
                 .ToList();
 
             // Process the filtered elements (for example, print their IDs)
-            foreach (Element element in elementsWithMyLevel)
+            foreach (Element element in myList)
                 {
                     TaskDialog.Show("Element ID", element.Id.ToString());
                 }
@@ -43,21 +43,21 @@ namespace WhatLevelAmI
                 return Result.Succeeded;
         }
 
-        public class SharedParameterElementFilter : ISelectionFilter
-        {
-            private string _parameterName;
+        //public class SharedParameterElementFilter : ISelectionFilter
+        //{
+        //    private string _parameterName;
 
-            public SharedParameterElementFilter(string parameterName)
-            {
-                _parameterName = parameterName;
-            }
+        //    public SharedParameterElementFilter(string parameterName)
+        //    {
+        //        _parameterName = parameterName;
+        //    }
 
-            public bool PassesFilter(Element element)
-            {
-                Parameter param = element.LookupParameter(_parameterName);
-                return param != null; //&& param.HasValue//
-            }
-        }
+        //    public bool PassesFilter(Element element)
+        //    {
+        //        Parameter param = element.LookupParameter(_parameterName);
+        //        return param != null; //&& param.HasValue//
+        //    }
+        //}
          // end code
         internal static PushButtonData GetButtonData()
         {
