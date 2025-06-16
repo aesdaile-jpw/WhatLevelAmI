@@ -6,7 +6,7 @@ using System.Linq;
 namespace WhatLevelAmI
 {
     [Transaction(TransactionMode.Manual)]
-    public class Command1 : IExternalCommand
+    public class FilterElementsBySharedParameter : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -17,18 +17,6 @@ namespace WhatLevelAmI
 
             // Your code goes here
             // this is some code created by Copilot
-
-
-
-public class FilterElementsBySharedParameter : IExternalCommand
-        {
-            public Result Execute(
-                ExternalCommandData commandData,
-                ref string message,
-                ElementSet elements)
-            {
-                // Get the current document
-                Document doc = commandData.Application.ActiveUIDocument.Document;
 
                 // Create a FilteredElementCollector to collect all elements in the document
                 FilteredElementCollector collector = new FilteredElementCollector(doc);
@@ -45,7 +33,6 @@ public class FilterElementsBySharedParameter : IExternalCommand
                 }
 
                 return Result.Succeeded;
-            }
         }
 
         public class SharedParameterElementFilter : ISelectionFilter
@@ -63,13 +50,7 @@ public class FilterElementsBySharedParameter : IExternalCommand
                 return param != null && param.HasValue;
             }
         }
-
-
-
-            // end code
-
-            return Result.Succeeded;
-        }
+         // end code
         internal static PushButtonData GetButtonData()
         {
             // use this method to define the properties for this command in the Revit ribbon
