@@ -47,7 +47,7 @@ namespace WhatLevelAmI
             public bool PassesFilter(Element element)
             {
                 Parameter param = element.LookupParameter(_parameterName);
-                return param != null && param.HasValue;
+                return param != null; //&& param.HasValue//
             }
         }
          // end code
