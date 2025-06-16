@@ -26,8 +26,16 @@ namespace WhatLevelAmI
                     .WherePasses(new ElementParameterFilter(new SharedParameterElementFilter("MyLevel")))
                     .ToList();
 
-                // Process the filtered elements (for example, print their IDs)
-                foreach (Element element in elementsWithMyLevel)
+            public static List<Element> GetElementsInCategoryWithParameter( Document doc, BuiltInCategory category, string parameterName ) { return new FilteredElementCollector( doc ).OfCategory( category ).WhereElementIsNotElementType().Where( e => e.LookupParameter( parameterName ) != null ).ToList(); }
+
+
+        List<Element> myList = new FilteredElementCollector( doc )
+                .WhereElementIsNotElementType()
+                .Where( e => e.LookupParameter( "My Test Parameter" ) != null )
+                .ToList();
+
+            // Process the filtered elements (for example, print their IDs)
+            foreach (Element element in elementsWithMyLevel)
                 {
                     TaskDialog.Show("Element ID", element.Id.ToString());
                 }
