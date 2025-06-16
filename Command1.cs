@@ -31,7 +31,7 @@ namespace WhatLevelAmI
 
         List<Element> myList = new FilteredElementCollector( doc )
                 .WhereElementIsNotElementType()
-                .Where( e => e.LookupParameter( "My Test Parameter" ) != null )
+                .Where( e => e.LookupParameter( "MyLevel" ) != null )
                 .ToList();
 
             // Process the filtered elements (for example, print their IDs)
