@@ -37,7 +37,7 @@ namespace WhatLevelAmI
             // Process the filtered elements (for example, print their IDs)
             foreach (Element element in myList)
                 {
-                    TaskDialog.Show("Element ID", element.Id.ToString());
+                TaskDialog.Show("Element ID", element.Id.ToString());
                 }
 
                 return Result.Succeeded;
