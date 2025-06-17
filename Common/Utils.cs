@@ -1,4 +1,6 @@
-﻿namespace WhatLevelAmI.Common
+﻿using Autodesk.Revit.DB;
+
+namespace WhatLevelAmI.Common
 {
     internal static class Utils
     {
@@ -25,5 +27,29 @@
 
             return null;
         }
+
+        public static void SetParameterValue(Element curElem, string paramName, string value)
+        {
+            Parameter curParam = curElem.LookupParameter(paramName);
+
+            if (curParam != null)
+            {
+                curParam.Set(value);
+            }
+        }
+
+        public static void SetParameterValue(Element curElem, string paramName, int value)
+        {
+            Parameter curParam = curElem.LookupParameter(paramName);
+
+            if (curParam != null)
+            {
+                curParam.Set(value);
+            }
+        }
+
+
+                           
+
     }
 }
