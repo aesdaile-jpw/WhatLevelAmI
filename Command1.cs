@@ -34,7 +34,7 @@ namespace WhatLevelAmI
 
             Transaction transaction = new Transaction(doc, "Set MyLevel Parameter");
             transaction.Start();
-            // Process the filtered elements (for example, print their IDs)
+
             foreach (Element element in myList)
             {
                     //GetLocationElement(element);
@@ -43,6 +43,7 @@ namespace WhatLevelAmI
                     Common.Utils.SetParameterValue(element, "MyLevel", FindClosestLevel(zCentroid, tolerance, levels).Name);
             }
             transaction.Commit();
+            transaction.Dispose();
 
             return Result.Succeeded;
         }
@@ -66,7 +67,6 @@ namespace WhatLevelAmI
 
         public Level FindClosestLevel(double zCentroid, double tolerance, List<Level> levels)
         {
-
             Level closestLevel = levels[0];
 
             for (int i = 1; i < levels.Count; i++)
@@ -78,40 +78,10 @@ namespace WhatLevelAmI
                 }
                 closestLevel = levels[i];
             }
-
             //string message = $"The closest level to the element is: {closestLevel.Name} at elevation {closestLevel.Elevation}.\n";
             //TaskDialog.Show("Revit", message);
             return closestLevel;
         }
-
-        //public Level FindClosestLevel(Element element, List<Level> levels)
-        //{
-        //    LocationPoint locationPoint = element.Location as LocationPoint;
-        //    if (locationPoint == null)
-        //    {
-        //        throw new InvalidOperationException("Element does not have a location point.");
-        //    }
-
-        //    XYZ elementPoint = locationPoint.Point;
-        //    Level closestLevel = null;
-        //    double closestDistance = double.MaxValue;
-
-        //    foreach (Level level in levels)
-        //    {
-        //        double distance = Math.Abs(level.Elevation - elementPoint.Z);
-        //        if (distance < closestDistance)
-        //        {
-        //            closestDistance = distance;
-        //            closestLevel = level;
-        //        }
-        //    }
-        //    string message = $"The closest level to the element is: {closestLevel.Name} at elevation {closestLevel.Elevation}.\n" +
-        //                     $"Element is at Z coordinate: {elementPoint.Z}.\n" +
-        //                     $"Distance to closest level: {closestDistance}.";
-        //    TaskDialog.Show("Revit", message);
-        //    return closestLevel;
-        //}
-
 
         public static double GetElementBoundingBoxMid(Autodesk.Revit.DB.Document document, Autodesk.Revit.DB.Element element)
         {
@@ -122,12 +92,6 @@ namespace WhatLevelAmI
             {
                 throw new Exception("Selected element doesn't contain a bounding box.");
             }
-
-            //string info = "Bounding box is enabled: " + box.Enabled.ToString();
-
-            //// Give the user some information.
-            //TaskDialog.Show("Revit", info);
-
             // Get the minimum and maximum points of the bounding box.
             Transform trf = box.Transform;
             XYZ min = box.Min;
@@ -140,7 +104,6 @@ namespace WhatLevelAmI
             //message += "\n'Maximum' coordinates: " + maxInModelCoords;
             //message += "\n'Minimum' coordinates: " + minInModelCoords;
             //message += "\n'Centroid Z value: " + zCentroid;
-
             //TaskDialog.Show("Revit", message);
 
             return zCentroid;
