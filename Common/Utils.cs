@@ -48,8 +48,12 @@ namespace WhatLevelAmI.Common
             }
         }
 
+        public static double ConvertMmToFeet(double millimeters)
+        {
+            return millimeters / 304.8;
+        }
 
-                           
+
 
     }
 }

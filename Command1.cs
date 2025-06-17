@@ -29,17 +29,22 @@ namespace WhatLevelAmI
             //List<Level> levels = levelCollector.Cast<Level>().ToList();
             List<Level> levels = levelCollector.Cast<Level>().OrderBy(l => l.Elevation).ToList();
 
+            double tolerancemm = 100;
+            double tolerance = Common.Utils.ConvertMmToFeet(tolerancemm);
+
+            Transaction transaction = new Transaction(doc, "Set MyLevel Parameter");
+            transaction.Start();
             // Process the filtered elements (for example, print their IDs)
             foreach (Element element in myList)
             {
                     //GetLocationElement(element);
                     //GetLevelInformation(element);
                     double zCentroid = GetElementBoundingBoxMid(doc, element);
-                    FindClosestLevel(zCentroid, levels);
+                    Common.Utils.SetParameterValue(element, "MyLevel", FindClosestLevel(zCentroid, tolerance, levels).Name);
             }
+            transaction.Commit();
 
-
-                return Result.Succeeded;
+            return Result.Succeeded;
         }
 
         internal static PushButtonData GetButtonData()
@@ -59,14 +64,14 @@ namespace WhatLevelAmI
             return myButtonData.Data;
         }
 
-        public Level FindClosestLevel(double zCentroid, List<Level> levels)
+        public Level FindClosestLevel(double zCentroid, double tolerance, List<Level> levels)
         {
 
             Level closestLevel = levels[0];
 
             for (int i = 1; i < levels.Count; i++)
             {
-                if (zCentroid < levels[i].Elevation)
+                if ((zCentroid - tolerance) < levels[i].Elevation)
                 {
                     closestLevel = levels[i-1];
                     break;
@@ -74,8 +79,8 @@ namespace WhatLevelAmI
                 closestLevel = levels[i];
             }
 
-            string message = $"The closest level to the element is: {closestLevel.Name} at elevation {closestLevel.Elevation}.\n";
-            TaskDialog.Show("Revit", message);
+            //string message = $"The closest level to the element is: {closestLevel.Name} at elevation {closestLevel.Elevation}.\n";
+            //TaskDialog.Show("Revit", message);
             return closestLevel;
         }
 
