@@ -18,16 +18,24 @@ namespace WhatLevelAmI
 
             // Your code goes here
        
-        List<Element> myList = new FilteredElementCollector( doc )
+            List<Element> myList = new FilteredElementCollector( doc )
                 .WhereElementIsNotElementType()
                 .Where( e => e.LookupParameter( "MyLevel" ) != null )
                 .ToList();
 
+            // Get all levels in the document
+            FilteredElementCollector levelCollector = new FilteredElementCollector(doc)
+                .OfClass(typeof(Level));
+            //List<Level> levels = levelCollector.Cast<Level>().ToList();
+            List<Level> levels = levelCollector.Cast<Level>().OrderBy(l => l.Elevation).ToList();
+
             // Process the filtered elements (for example, print their IDs)
             foreach (Element element in myList)
-                {
+            {
                     GetLocationElement(element);
                     GetElementBoundingBox(doc, element);
+                    //GetLevelInformation(element);
+                    FindClosestLevel(element, levels);
             }
 
 
@@ -51,8 +59,37 @@ namespace WhatLevelAmI
             return myButtonData.Data;
         }
 
+        public Level FindClosestLevel(Element element, List<Level> levels)
+        {
+            LocationPoint locationPoint = element.Location as LocationPoint;
+            if (locationPoint == null)
+            {
+                throw new InvalidOperationException("Element does not have a location point.");
+            }
 
-       public static void GetElementBoundingBox(Autodesk.Revit.DB.Document document, Autodesk.Revit.DB.Element element)
+            XYZ elementPoint = locationPoint.Point;
+            Level closestLevel = null;
+            double closestDistance = double.MaxValue;
+
+            foreach (Level level in levels)
+            {
+                double distance = Math.Abs(level.Elevation - elementPoint.Z);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestLevel = level;
+                }
+            }
+            string message = $"The closest level to the element is: {closestLevel.Name} at elevation {closestLevel.Elevation}.\n" +
+                             $"Element is at Z coordinate: {elementPoint.Z}.\n" +
+                             $"Distance to closest level: {closestDistance}.";
+            TaskDialog.Show("Revit", message);
+            return closestLevel;
+        }
+
+
+
+        public static void GetElementBoundingBox(Autodesk.Revit.DB.Document document, Autodesk.Revit.DB.Element element)
         {
             // Get the BoundingBox instance for current view.
             BoundingBoxXYZ box = element.get_BoundingBox(document.ActiveView);
@@ -117,6 +154,28 @@ namespace WhatLevelAmI
                 TaskDialog.Show($"Revit", prompt);
             }
         }
+
+        public void GetLevelInformation(Autodesk.Revit.DB.Element element)
+        {
+            // Get the level object to which the element is assigned.
+            if (element.LevelId.Equals(ElementId.InvalidElementId))
+            {
+                TaskDialog.Show("Revit", "The element isn't based on a level.");
+            }
+            else
+            {
+                Level level = element.Document.GetElement(element.LevelId) as Level;
+
+                // Format the prompt information(Name and elevation)
+                String prompt = "The element is based on a level.";
+                prompt += "\nThe level name is:  " + level.Name;
+                prompt += "\nThe level elevation is:  " + level.Elevation;
+
+                // Show the information to the user.
+                TaskDialog.Show("Revit", prompt);
+            }
+        }
+
     }
 
 }
