@@ -31,6 +31,7 @@ namespace WhatLevelAmI
 
             double tolerancemm = 100;
             double tolerance = Common.Utils.ConvertMmToFeet(tolerancemm);
+            int count = 0;
 
             Transaction transaction = new Transaction(doc, "Set MyLevel Parameter");
             transaction.Start();
@@ -41,9 +42,12 @@ namespace WhatLevelAmI
                     //GetLevelInformation(element);
                     double zCentroid = GetElementBoundingBoxMid(doc, element);
                     Common.Utils.SetParameterValue(element, "MyLevel", FindClosestLevel(zCentroid, tolerance, levels).Name);
+                    count++;
             }
             transaction.Commit();
             transaction.Dispose();
+
+            TaskDialog.Show("Revit", $"Set the MyLevel parameter for {count} elements.");
 
             return Result.Succeeded;
         }
