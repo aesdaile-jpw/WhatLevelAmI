@@ -52,7 +52,7 @@ namespace WhatLevelAmI
         {
             // use this method to define the properties for this command in the Revit ribbon
             string buttonInternalName = "btnCommand1";
-            string buttonTitle = "Button 1";
+            string buttonTitle = "What Level Am I?";
 
             Common.ButtonDataClass myButtonData = new Common.ButtonDataClass(
                 buttonInternalName,
@@ -60,7 +60,7 @@ namespace WhatLevelAmI
                 MethodBase.GetCurrentMethod().DeclaringType?.FullName,
                 Properties.Resources.Blue_32,
                 Properties.Resources.Blue_16,
-                "This is a tooltip for Button 1");
+                "runs What Level Am I? plugin");
 
             return myButtonData.Data;
         }
