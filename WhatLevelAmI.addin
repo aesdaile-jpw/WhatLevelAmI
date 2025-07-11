@@ -6,8 +6,8 @@
     <Assembly>WhatLevelAmI\WhatLevelAmI.dll</Assembly>
     <FullClassName>WhatLevelAmI.Command1</FullClassName>
     <ClientId>ded6db42-5e69-4d41-a20a-2d5b5d1ec1ad</ClientId>
-    <VendorId>com.YOUR COMPANY NAME</VendorId>
-    <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
+    <VendorId>jpw.com.au</VendorId>
+    <VendorDescription>JPW</VendorDescription>
   </AddIn>
   <AddIn Type="Command">
     <Text>WhatLevelAmI - Command 2</Text>
@@ -15,15 +15,15 @@
     <Assembly>WhatLevelAmI\WhatLevelAmI.dll</Assembly>
     <FullClassName>WhatLevelAmI.Command2</FullClassName>
     <ClientId>c01188a3-2701-467c-bb06-6fd671f5a8f3</ClientId>
-    <VendorId>com.YOUR COMPANY NAME</VendorId>
-    <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
+    <VendorId>jpw.com.au</VendorId>
+    <VendorDescription>JPW</VendorDescription>
   </AddIn>
   <AddIn Type="Application">
     <Name>WhatLevelAmI</Name>
     <Assembly>WhatLevelAmI\WhatLevelAmI.dll</Assembly>
     <FullClassName>WhatLevelAmI.App</FullClassName>
     <ClientId>286a089b-9b6f-4273-8240-fcad2e82e41b</ClientId>
-    <VendorId>com.YOUR COMPANY NAME</VendorId>
-    <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
+    <VendorId>jpw.com.au</VendorId>
+    <VendorDescription>JPW</VendorDescription>
   </AddIn>
 </RevitAddIns>
