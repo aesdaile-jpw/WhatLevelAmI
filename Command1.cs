@@ -20,7 +20,7 @@ namespace WhatLevelAmI
        
             List<Element> myList = new FilteredElementCollector( doc )
                 .WhereElementIsNotElementType()
-                .Where( e => e.LookupParameter( "MyLevel" ) != null )
+                .Where( e => e.LookupParameter( "Architectural Level" ) != null )
                 .ToList();
 
             // Get all levels in the document
@@ -33,7 +33,7 @@ namespace WhatLevelAmI
             double tolerance = Common.Utils.ConvertMmToFeet(tolerancemm);
             int count = 0;
 
-            Transaction transaction = new Transaction(doc, "Set MyLevel Parameter");
+            Transaction transaction = new Transaction(doc, "Set Architectural Level Parameter");
             transaction.Start();
 
             foreach (Element element in myList)
@@ -41,13 +41,13 @@ namespace WhatLevelAmI
                     //GetLocationElement(element);
                     //GetLevelInformation(element);
                     double zCentroid = GetElementBoundingBoxMid(doc, element);
-                    Common.Utils.SetParameterValue(element, "MyLevel", FindClosestLevel(zCentroid, tolerance, levels).Name);
+                    Common.Utils.SetParameterValue(element, "Architectural Level", FindClosestLevel(zCentroid, tolerance, levels).Name);
                     count++;
             }
             transaction.Commit();
             transaction.Dispose();
 
-            TaskDialog.Show("Revit", $"Set the MyLevel parameter for {count} elements.");
+            TaskDialog.Show("Revit", $"Set the Architectural Level parameter for {count} elements.");
 
             return Result.Succeeded;
         }
